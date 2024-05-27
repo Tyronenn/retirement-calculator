@@ -11,5 +11,18 @@
         "employer_match_limit": 100.0,
         "tax_bracket": 10,
         "expected_return": 7.0
+    },
+    {
+        "current_age": 25,
+        "retirement_age": 60,
+        "life_expectancy": 90,
+        "current_income": 100000.0,
+        "salary_increase_pct": 5.0,
+        "current_savings": 45000.0,
+        "annual_contrib_pct": 12.0,
+        "employer_match_pct": 9.0,
+        "employer_match_limit": 100.0,
+        "tax_bracket": 24,
+        "expected_return": 7.0
     }
 ]
