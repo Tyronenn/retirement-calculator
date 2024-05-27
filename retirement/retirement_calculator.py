@@ -1,6 +1,6 @@
 import json
 import matplotlib.pyplot as plt
-import tax_bracket
+import dependencies.tax_bracket as tax_bracket
 
 def save_user_data(data, filename='user_data.json'):
     try:
