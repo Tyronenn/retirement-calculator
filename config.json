@@ -1,0 +1,11 @@
+{
+    "tax_brackets": [
+        {"rate": 0.1, "income": 9950},
+        {"rate": 0.12, "income": 40525},
+        {"rate": 0.22, "income": 86375},
+        {"rate": 0.24, "income": 164925},
+        {"rate": 0.32, "income": 209425},
+        {"rate": 0.35, "income": 523600},
+        {"rate": 0.37, "income": "inf"}
+    ]
+}
