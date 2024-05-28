@@ -1,6 +1,6 @@
 import json
 import matplotlib.pyplot as plt
-import dependencies.tax_bracket as tax_bracket
+import tax_bracket
 
 class RetirementCalculator:
     def __init__(self):
