@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
-from retirement_calculator import RetirementCalculator  # Importing the class from retirement_calculator.py
+from retirement_calculator import RetirementCalculator
 
 class RetirementCalculatorGUI:
     def __init__(self, root):
@@ -10,48 +10,41 @@ class RetirementCalculatorGUI:
         self.create_widgets()
 
     def create_widgets(self):
-        tk.Label(self.root, text="Current Age:").grid(row=0, column=0)
-        self.current_age_entry = tk.Entry(self.root)
-        self.current_age_entry.grid(row=0, column=1)
-
-        tk.Label(self.root, text="Retirement Age:").grid(row=1, column=0)
-        self.retirement_age_entry = tk.Entry(self.root)
-        self.retirement_age_entry.grid(row=1, column=1)
-
-        tk.Label(self.root, text="Life Expectancy:").grid(row=2, column=0)
-        self.life_expectancy_entry = tk.Entry(self.root)
-        self.life_expectancy_entry.grid(row=2, column=1)
-
-        tk.Label(self.root, text="Current Income:").grid(row=3, column=0)
-        self.current_income_entry = tk.Entry(self.root)
-        self.current_income_entry.grid(row=3, column=1)
-
-        tk.Label(self.root, text="Salary Increase (%):").grid(row=4, column=0)
-        self.salary_increase_entry = tk.Entry(self.root)
-        self.salary_increase_entry.grid(row=4, column=1)
-
-        tk.Label(self.root, text="Current Savings:").grid(row=5, column=0)
-        self.current_savings_entry = tk.Entry(self.root)
-        self.current_savings_entry.grid(row=5, column=1)
-
-        tk.Label(self.root, text="Annual Contribution (%):").grid(row=6, column=0)
-        self.annual_contrib_entry = tk.Entry(self.root)
-        self.annual_contrib_entry.grid(row=6, column=1)
-
-        tk.Label(self.root, text="Employer Match (%):").grid(row=7, column=0)
-        self.employer_match_entry = tk.Entry(self.root)
-        self.employer_match_entry.grid(row=7, column=1)
-
-        tk.Label(self.root, text="Employer Match Limit (%):").grid(row=8, column=0)
-        self.employer_match_limit_entry = tk.Entry(self.root)
-        self.employer_match_limit_entry.grid(row=8, column=1)
-
-        tk.Label(self.root, text="Expected Return (%):").grid(row=9, column=0)
-        self.expected_return_entry = tk.Entry(self.root)
-        self.expected_return_entry.grid(row=9, column=1)
+        self.add_label_entry("Current Age:", 0)
+        self.add_label_entry("Retirement Age:", 1)
+        self.add_label_entry("Life Expectancy:", 2)
+        self.add_label_entry("Current Income:", 3)
+        self.add_label_entry("Salary Increase (%):", 4)
+        self.add_label_entry("Current Savings:", 5)
+        self.add_label_entry("Annual Contribution (%):", 6)
+        self.add_label_entry("Employer Match (%):", 7)
+        self.add_label_entry("Employer Match Limit (%):", 8)
+        self.add_label_entry("Expected Return (%):", 9)
 
         self.calculate_button = tk.Button(self.root, text="Calculate", command=self.calculate)
-        self.calculate_button.grid(row=10, column=0, columnspan=2)
+        self.calculate_button.grid(row=10, column=0, columnspan=2, pady=10)
+
+    def add_label_entry(self, text, row):
+        label = tk.Label(self.root, text=text)
+        label.grid(row=row, column=0, padx=5, pady=5, sticky='e')
+        entry = tk.Entry(self.root)
+        entry.grid(row=row, column=1, padx=5, pady=5, sticky='w')
+        self.add_tooltip(label, text)
+        setattr(self, f"{text.lower().replace(' ', '_').replace('(%):', '_entry').replace(':', '')}_entry", entry)
+
+    def add_tooltip(self, widget, text):
+        tooltip = tk.Label(self.root, text=text, bg='yellow', relief='solid', borderwidth=1, wraplength=150)
+        tooltip.place_forget()
+
+        def enter(event):
+            x, y, _, _ = widget.bbox()
+            tooltip.place(x=x, y=y+20)
+
+        def leave(event):
+            tooltip.place_forget()
+
+        widget.bind("<Enter>", enter)
+        widget.bind("<Leave>", leave)
 
     def calculate(self):
         try:
