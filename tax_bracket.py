@@ -9,7 +9,12 @@ def fetch_latest_tax_brackets(filename='config.json'):
     """
     try:
         with open(filename, 'r') as file:
-            return json.load(file)['tax_brackets']
+            tax_brackets = json.load(file)['tax_brackets']
+            # Convert "inf" strings to float('inf')
+            for bracket in tax_brackets:
+                if bracket['max'] == "inf":
+                    bracket['max'] = float('inf')
+            return tax_brackets
     except FileNotFoundError:
         raise FileNotFoundError(f"Configuration file '{filename}' not found.")
 
