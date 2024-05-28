@@ -4,15 +4,11 @@ import tax_bracket
 
 class RetirementCalculator:
     def __init__(self):
-        self.config = self.load_config()
+        self.tax_brackets = tax_bracket.fetch_latest_tax_brackets()
 
-    @staticmethod
-    def load_config(filename='config.json'):
-        try:
-            with open(filename, 'r') as file:
-                return json.load(file)
-        except FileNotFoundError:
-            raise FileNotFoundError(f"Configuration file '{filename}' not found.")
+    def calculate_taxes(self, income):
+        tax_rate = tax_bracket.get_tax_bracket(income, self.tax_brackets) / 100
+        return income * tax_rate
 
     @staticmethod
     def save_user_data(data, filename='user_data.json'):
@@ -66,10 +62,6 @@ class RetirementCalculator:
 
         RetirementCalculator.save_user_data(data)
         return data
-
-    def calculate_taxes(self, income):
-        tax_rate = tax_bracket.get_tax_bracket(income) / 100
-        return income * tax_rate
 
     def project_savings(self, data):
         current_age = data['current_age']
