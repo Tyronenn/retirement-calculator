@@ -1,11 +1,11 @@
 {
     "tax_brackets": [
-        {"rate": 0.1, "income": 9950},
-        {"rate": 0.12, "income": 40525},
-        {"rate": 0.22, "income": 86375},
-        {"rate": 0.24, "income": 164925},
-        {"rate": 0.32, "income": 209425},
-        {"rate": 0.35, "income": 523600},
-        {"rate": 0.37, "income": "inf"}
+        {"min": 0, "max": 9950, "rate": 10},
+        {"min": 9951, "max": 40525, "rate": 12},
+        {"min": 40526, "max": 86375, "rate": 22},
+        {"min": 86376, "max": 164925, "rate": 24},
+        {"min": 164926, "max": 209425, "rate": 32},
+        {"min": 209426, "max": 523600, "rate": 35},
+        {"min": 523601, "max": "inf", "rate": 37}
     ]
 }
