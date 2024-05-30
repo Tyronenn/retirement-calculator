@@ -10,16 +10,17 @@ class RetirementCalculatorGUI:
         self.create_widgets()
 
     def create_widgets(self):
-        self.add_label_entry("Current Age:", 0)
-        self.add_label_entry("Retirement Age:", 1)
-        self.add_label_entry("Life Expectancy:", 2)
-        self.add_label_entry("Current Income:", 3)
-        self.add_label_entry("Salary Increase (%):", 4)
-        self.add_label_entry("Current Savings:", 5)
-        self.add_label_entry("Annual Contribution (%):", 6)
-        self.add_label_entry("Employer Match (%):", 7)
-        self.add_label_entry("Employer Match Limit (%):", 8)
-        self.add_label_entry("Expected Return (%):", 9)
+        self.entries = {}
+        self.add_label_entry("Current Age", 0)
+        self.add_label_entry("Retirement Age", 1)
+        self.add_label_entry("Life Expectancy", 2)
+        self.add_label_entry("Current Income", 3)
+        self.add_label_entry("Salary Increase (%)", 4)
+        self.add_label_entry("Current Savings", 5)
+        self.add_label_entry("Annual Contribution (%)", 6)
+        self.add_label_entry("Employer Match (%)", 7)
+        self.add_label_entry("Employer Match Limit (%)", 8)
+        self.add_label_entry("Expected Return (%)", 9)
 
         self.calculate_button = tk.Button(self.root, text="Calculate", command=self.calculate)
         self.calculate_button.grid(row=10, column=0, columnspan=2, pady=10)
@@ -30,7 +31,7 @@ class RetirementCalculatorGUI:
         entry = tk.Entry(self.root)
         entry.grid(row=row, column=1, padx=5, pady=5, sticky='w')
         self.add_tooltip(label, text)
-        setattr(self, f"{text.lower().replace(' ', '_').replace('(%):', '_entry').replace(':', '')}_entry", entry)
+        self.entries[text] = entry
 
     def add_tooltip(self, widget, text):
         tooltip = tk.Label(self.root, text=text, bg='yellow', relief='solid', borderwidth=1, wraplength=150)
@@ -49,16 +50,16 @@ class RetirementCalculatorGUI:
     def calculate(self):
         try:
             data = {
-                'current_age': int(self.current_age_entry.get()),
-                'retirement_age': int(self.retirement_age_entry.get()),
-                'life_expectancy': int(self.life_expectancy_entry.get()),
-                'current_income': float(self.current_income_entry.get()),
-                'salary_increase_pct': float(self.salary_increase_entry.get()),
-                'current_savings': float(self.current_savings_entry.get()),
-                'annual_contrib_pct': float(self.annual_contrib_entry.get()),
-                'employer_match_pct': float(self.employer_match_entry.get()),
-                'employer_match_limit': float(self.employer_match_limit_entry.get()),
-                'expected_return': float(self.expected_return_entry.get())
+                'current_age': int(self.entries['Current Age'].get()),
+                'retirement_age': int(self.entries['Retirement Age'].get()),
+                'life_expectancy': int(self.entries['Life Expectancy'].get()),
+                'current_income': float(self.entries['Current Income'].get()),
+                'salary_increase_pct': float(self.entries['Salary Increase (%)'].get()),
+                'current_savings': float(self.entries['Current Savings'].get()),
+                'annual_contrib_pct': float(self.entries['Annual Contribution (%)'].get()),
+                'employer_match_pct': float(self.entries['Employer Match (%)'].get()),
+                'employer_match_limit': float(self.entries['Employer Match Limit (%)'].get()),
+                'expected_return': float(self.entries['Expected Return (%)'].get())
             }
         except ValueError as e:
             messagebox.showerror("Input Error", f"Invalid input: {e}. Please enter the correct data type.")
