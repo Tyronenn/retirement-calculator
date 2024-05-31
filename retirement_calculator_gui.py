@@ -11,26 +11,39 @@ class RetirementCalculatorGUI:
 
     def create_widgets(self):
         self.entries = {}
-        self.add_label_entry("Current Age", 0)
-        self.add_label_entry("Retirement Age", 1)
-        self.add_label_entry("Life Expectancy", 2)
-        self.add_label_entry("Current Income", 3)
-        self.add_label_entry("Salary Increase (%)", 4)
-        self.add_label_entry("Current Savings", 5)
-        self.add_label_entry("Annual Contribution (%)", 6)
-        self.add_label_entry("Employer Match (%)", 7)
-        self.add_label_entry("Employer Match Limit (%)", 8)
-        self.add_label_entry("Expected Return (%)", 9)
+        tooltips = {
+            "Current Age": "Enter your current age in years.",
+            "Retirement Age": "Enter the age at which you plan to retire.",
+            "Life Expectancy": "Enter your expected age of living.",
+            "Current Income": "Enter your current annual income in dollars.",
+            "Salary Increase (%)": "Enter your expected annual salary increase percentage.",
+            "Current Savings": "Enter your current retirement savings in dollars.",
+            "Annual Contribution (%)": "Enter the percentage of your income you plan to contribute annually.",
+            "Employer Match (%)": "Enter the percentage of your income that your employer matches.",
+            "Employer Match Limit (%)": "Enter the maximum percentage of your income that your employer matches.",
+            "Expected Return (%)": "Enter the expected annual return rate on your investments."
+        }
+
+        self.add_label_entry("Current Age", 0, tooltips["Current Age"])
+        self.add_label_entry("Retirement Age", 1, tooltips["Retirement Age"])
+        self.add_label_entry("Life Expectancy", 2, tooltips["Life Expectancy"])
+        self.add_label_entry("Current Income", 3, tooltips["Current Income"])
+        self.add_label_entry("Salary Increase (%)", 4, tooltips["Salary Increase (%)"])
+        self.add_label_entry("Current Savings", 5, tooltips["Current Savings"])
+        self.add_label_entry("Annual Contribution (%)", 6, tooltips["Annual Contribution (%)"])
+        self.add_label_entry("Employer Match (%)", 7, tooltips["Employer Match (%)"])
+        self.add_label_entry("Employer Match Limit (%)", 8, tooltips["Employer Match Limit (%)"])
+        self.add_label_entry("Expected Return (%)", 9, tooltips["Expected Return (%)"])
 
         self.calculate_button = tk.Button(self.root, text="Calculate", command=self.calculate)
         self.calculate_button.grid(row=10, column=0, columnspan=2, pady=10)
 
-    def add_label_entry(self, text, row):
+    def add_label_entry(self, text, row, tooltip_text):
         label = tk.Label(self.root, text=text)
         label.grid(row=row, column=0, padx=5, pady=5, sticky='e')
         entry = tk.Entry(self.root)
         entry.grid(row=row, column=1, padx=5, pady=5, sticky='w')
-        self.add_tooltip(label, text)
+        self.add_tooltip(entry, tooltip_text)
         self.entries[text] = entry
 
     def add_tooltip(self, widget, text):
@@ -38,8 +51,10 @@ class RetirementCalculatorGUI:
         tooltip.place_forget()
 
         def enter(event):
-            x, y, _, _ = widget.bbox()
-            tooltip.place(x=x, y=y+20)
+            x, y, width, height = widget.bbox("insert")
+            x = x + widget.winfo_rootx() + width
+            y = y + widget.winfo_rooty() + height // 2
+            tooltip.place(x=x, y=y)
 
         def leave(event):
             tooltip.place_forget()
